@@ -36,6 +36,9 @@ namespace ShoeWeightt.Views
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
                         break;
+                    case (int)MenuItemType.Test:
+                        MenuPages.Add(id, new NavigationPage(new TestPage()));
+                        break;
                 }
             }
 

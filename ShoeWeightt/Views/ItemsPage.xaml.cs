@@ -31,11 +31,11 @@ namespace ShoeWeightt.Views
             var item = args.SelectedItem as Item;
             if (item == null)
                 return;
-            viewModel.Items.Remove(item);
-            //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            //viewModel.Items.Remove(item);
+            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
-            //// Manually deselect item.
-            //ItemsListView.SelectedItem = null;
+            // Manually deselect item.
+            ItemsListView.SelectedItem = null;
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
