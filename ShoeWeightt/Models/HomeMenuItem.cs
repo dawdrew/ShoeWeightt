@@ -7,7 +7,8 @@ namespace ShoeWeightt.Models
     public enum MenuItemType
     {
         Browse,
-        About
+        About,
+        Test
     }
     public class HomeMenuItem
     {
