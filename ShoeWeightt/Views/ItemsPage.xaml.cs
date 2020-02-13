@@ -26,6 +26,7 @@ namespace ShoeWeightt.Views
 
             BindingContext = viewModel = new ItemsViewModel();
         }
+
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
             var item = args.SelectedItem as Item;
@@ -43,6 +44,13 @@ namespace ShoeWeightt.Views
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
 
+        public void OnDelete(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
+            //viewModel.Items.Remove(item);
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -52,3 +60,4 @@ namespace ShoeWeightt.Views
         }
     }
 }
+
