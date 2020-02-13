@@ -54,6 +54,18 @@ namespace ShoeWeightt.Views
                             select itm).FirstOrDefault<Item>();
             viewModel.Items.Remove(listItem);
             await viewModel.DataStore.DeleteItemAsync(listItem.Id.ToString());
+
+        }
+
+
+        public void OnHide(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Hide Browse Item", mi.CommandParameter + " will be hidden from list", "OK");
+            var listItem = (from itm in viewModel.Items
+                            where itm.Text == mi.CommandParameter.ToString()
+                            select itm).FirstOrDefault<Item>();
+            viewModel.Items.Remove(listItem);
         }
 
         protected override void OnAppearing()
