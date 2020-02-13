@@ -21,6 +21,9 @@
                 <DataTemplate>
                     <ViewCell>
                          <ViewCell.ContextActions>
+                            <MenuItem Clicked="OnHide"
+                                CommandParameter="{Binding Text}"
+                                Text="Hide" IsDestructive="False" />
                             <MenuItem Clicked="OnDelete"
                                 CommandParameter="{Binding Text}"
                                 Text="Delete" IsDestructive="True" />

@@ -20,12 +20,12 @@ namespace ShoeWeightt.Views
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel viewModel;
-
         public ItemsPage()
         {
             InitializeComponent();
 
             BindingContext = viewModel = new ItemsViewModel();
+            
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -45,12 +45,15 @@ namespace ShoeWeightt.Views
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
 
-        public void OnDelete(object sender, EventArgs e)
+        async public void OnDelete(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
-            Item listItem = (from itm in viewModel.Items.ToString() where itm.ToString() == mi.CommandParameter.ToString() select itm;
-            
+            await DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
+            var listItem = (from itm in viewModel.Items
+                            where itm.Text == mi.CommandParameter.ToString()
+                            select itm).FirstOrDefault<Item>();
+            viewModel.Items.Remove(listItem);
+            await viewModel.DataStore.DeleteItemAsync(listItem.Id.ToString());
         }
 
         protected override void OnAppearing()
