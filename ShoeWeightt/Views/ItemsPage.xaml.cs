@@ -11,11 +11,12 @@ using ShoeWeightt.Models;
 using ShoeWeightt.Views;
 using ShoeWeightt.ViewModels;
 
+
 namespace ShoeWeightt.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
+    [DesignTimeVisible(true)]
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel viewModel;
@@ -48,7 +49,8 @@ namespace ShoeWeightt.Views
         {
             var mi = ((MenuItem)sender);
             DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
-            //viewModel.Items.Remove(item);
+            Item listItem = (from itm in viewModel.Items.ToString() where itm.ToString() == mi.CommandParameter.ToString() select itm;
+            
         }
 
         protected override void OnAppearing()
