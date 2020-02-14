@@ -23,15 +23,20 @@ namespace ShoeWeightt.Views
             {
                 Text = "Item name",
                 Description = "This is an item description."
+                
             };
-
+            Console.WriteLine("please work");
             BindingContext = this;
         }
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "AddItem", Item);
+            //MessagingCenter.Send(this, "AddItem", Item);
+            Console.WriteLine(Item.Text.ToString(), Item.Description.ToString());
+            var item = (Item)BindingContext;
+            await App.Database.SaveItemAsync(item);
             await Navigation.PopModalAsync();
+
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)

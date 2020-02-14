@@ -33,7 +33,7 @@ namespace ShoeWeightt.Views
             var item = args.SelectedItem as Item;
             if (item == null)
                 return;
-            //viewModel.Items.Remove(item);
+            //viewModel.Items.Remove(item); SETH CODE
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
             // Manually deselect item.
@@ -53,7 +53,8 @@ namespace ShoeWeightt.Views
                             where itm.Text == mi.CommandParameter.ToString()
                             select itm).FirstOrDefault<Item>();
             viewModel.Items.Remove(listItem);
-            await viewModel.DataStore.DeleteItemAsync(listItem.Id.ToString());
+            //await viewModel.DataStore.DeleteItemAsync(listItem.Id);
+            await App.Database.DeleteItemAsync(listItem);
 
         }
 
@@ -68,12 +69,13 @@ namespace ShoeWeightt.Views
             viewModel.Items.Remove(listItem);
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            ItemsListView.ItemsSource = await App.Database.GetItemAsync();
+            //if (viewModel.Items.Count == 0)
+            //    viewModel.LoadItemsCommand.Execute(null);
         }
     }
 }
