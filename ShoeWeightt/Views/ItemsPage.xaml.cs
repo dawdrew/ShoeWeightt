@@ -19,12 +19,12 @@ namespace ShoeWeightt.Views
     [DesignTimeVisible(true)]
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel viewModel;
+        //ItemsViewModel viewModel;
         public ItemsPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            //BindingContext = viewModel = new ItemsViewModel();
             
         }
 
@@ -49,25 +49,26 @@ namespace ShoeWeightt.Views
         {
             var mi = ((MenuItem)sender);
             await DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
-            var listItem = (from itm in viewModel.Items
-                            where itm.Text == mi.CommandParameter.ToString()
+            var listItem = (from itm in await App.Database.GetItemAsync()
+                            where itm.ToString() == mi.CommandParameter.ToString()
                             select itm).FirstOrDefault<Item>();
-            viewModel.Items.Remove(listItem);
+            //viewModel.Items.Remove(listItem);
             //await viewModel.DataStore.DeleteItemAsync(listItem.Id);
             await App.Database.DeleteItemAsync(listItem);
 
         }
 
 
-        public void OnHide(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("Hide Browse Item", mi.CommandParameter + " will be hidden from list", "OK");
-            var listItem = (from itm in viewModel.Items
-                            where itm.Text == mi.CommandParameter.ToString()
-                            select itm).FirstOrDefault<Item>();
-            viewModel.Items.Remove(listItem);
-        }
+        //async public void OnHide(object sender, EventArgs e)
+        //{
+        //    var mi = ((MenuItem)sender);
+        //    await DisplayAlert("Hide Browse Item", mi.CommandParameter + " will be hidden from list", "OK");
+        //    var listItem = (from itm in await App.Database.GetItemAsync()
+        //                     where itm.ToString() == mi.CommandParameter.ToString()
+        //                     select itm).FirstOrDefault<Item>();
+        //    await App.Database.DeleteItemAsync(listItem);
+        //    //viewModel.Items.Remove(listItem);
+        //}
 
         protected override async void OnAppearing()
         {

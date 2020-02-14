@@ -32,9 +32,10 @@ namespace ShoeWeightt.Views
         async void Save_Clicked(object sender, EventArgs e)
         {
             //MessagingCenter.Send(this, "AddItem", Item);
-            Console.WriteLine(Item.Text.ToString(), Item.Description.ToString());
-            var item = (Item)BindingContext;
-            await App.Database.SaveItemAsync(item);
+            //Console.WriteLine(Item.Text.ToString(), Item.Description.ToString());
+            //var item = (Item)BindingContext;
+            //Console.WriteLine(item.ToString(),"penis monster lives here");
+            await App.Database.SaveItemAsync(Item);
             await Navigation.PopModalAsync();
 
         }
