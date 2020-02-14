@@ -21,11 +21,12 @@ namespace ShoeWeightt.Views
 
             Item = new Item
             {
+                Id = 0,
                 Text = "Item name",
                 Description = "This is an item description."
                 
             };
-            Console.WriteLine("please work");
+            //Console.WriteLine("please work");
             BindingContext = this;
         }
 

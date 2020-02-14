@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using ShoeWeightt.Models;
 using ShoeWeightt.Services;
+using ShoeWeightt.Data;
 
 namespace ShoeWeightt.ViewModels
 {
