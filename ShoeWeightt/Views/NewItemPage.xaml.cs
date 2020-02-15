@@ -21,8 +21,8 @@ namespace ShoeWeightt.Views
 
             Item = new Item
             {
-                Id = 0,
-                Text = "Item name",
+                //Id = 0,
+                Text = "Item name NIGGA",
                 Description = "This is an item description."
                 
             };
@@ -32,11 +32,12 @@ namespace ShoeWeightt.Views
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            //MessagingCenter.Send(this, "AddItem", Item);
+            MessagingCenter.Send(this, "AddItem", Item);
             //Console.WriteLine(Item.Text.ToString(), Item.Description.ToString());
             //var item = (Item)BindingContext;
             //Console.WriteLine(item.ToString(),"penis monster lives here");
-            await App.Database.SaveItemAsync(Item);
+
+            //await App.Database.SaveItemAsync(Item);
             await Navigation.PopModalAsync();
 
         }

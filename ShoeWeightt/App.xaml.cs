@@ -29,7 +29,7 @@ namespace ShoeWeightt
         {
             InitializeComponent();
 
-            //DependencyService.Register<MockDataStore>();
+            DependencyService.Register<ItemDatabase>();
             MainPage = new MainPage();
         }
 

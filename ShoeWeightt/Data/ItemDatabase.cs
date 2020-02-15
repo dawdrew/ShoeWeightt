@@ -1,16 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 using SQLite;
 using ShoeWeightt.Services;
 using ShoeWeightt.Models;
 
 namespace ShoeWeightt.Data
-
-
 {
     public class ItemDatabase : IDataStore<Item>
-    {
+    { 
+        public List<Item> items;
+        public ItemDatabase()
+            {
+            items = new List<Item>()
+                {
+                new Item {Text = "SUCK MY COCK", Description="THIS APP SUCKS ASIAN DICK." },
+                //new Item { Id = Guid.NewGuid(int), Text = "Second item", Description="This is an item description." },
+                //new Item { Id = Guid.NewGuid(int), Text = "Third item", Description="This is an item description." },
+                //new Item { Id = Guid.NewGuid(int), Text = "Fourth item", Description="This is an item description." },
+                //new Item { Id = Guid.NewGuid(int), Text = "Fifth item", Description="This is an item description." },
+                //new Item { Id = Guid.NewGuid(), Text = "Sixth item", Description="This is an item description." },
+                };
+            Console.WriteLine(items[0]);
+            Console.WriteLine(items[0].Id);
+            Console.WriteLine(items[0].Text);
+            SaveItemAsync(items[0]);
+            }
+    
         readonly SQLiteAsyncConnection _database;
 
         public ItemDatabase(string dbPath)
@@ -18,33 +36,47 @@ namespace ShoeWeightt.Data
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Item>().Wait();
         }
-        public Task<List<Item>> GetItemAsync()
+        public async Task<List<Item>> GetItemsAsync()
         {
-            return _database.Table<Item>().ToListAsync();
+            List<Item> testing = new List<Item>();
+            
+            foreach (Item i in await _database.Table<Item>().ToListAsync())
+            {
+                testing.Add(i);
+                Console.WriteLine(i.Id);
+                Console.WriteLine(i.Text);
+                Console.WriteLine(i.Description);
+            }
+            return await _database.Table<Item>().ToListAsync();
+
         }
         
         public Task<Item> GetItemAsync(int id)
         {
-            return _database.Table<Item>()
-                            .Where(i => i.Id == id)
-                            .FirstOrDefaultAsync();
+            return _database.Table<Item>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<int> SaveItemAsync(Item item)
         {
-            if (item.Id != 0)
-            {
-                return _database.UpdateAsync(item);
-            }
-            else
-            {
-                return _database.InsertAsync(item);
+            //if (item.Id != 0)
+            //{
+            //    return _database.UpdateAsync(item);
+            //}
+            //else
+            //{
+                return _database.InsertOrReplaceAsync(item);
+            //}
         }
-    }
 
-        public Task<int> DeleteItemAsync(Item item)
+        public async Task<int> DeleteItemAsync(int id)
         {
-            return _database.DeleteAsync(item);
+            //return _database.DeleteAsync(item);
+            
+
+            var oldItem = items.Where((Item arg) => arg.Id == id).FirstOrDefault();
+            items.Remove(oldItem);
+            return await _database.DeleteAsync(oldItem);
+            //return await Task.FromResult(true);
         }
 
     }

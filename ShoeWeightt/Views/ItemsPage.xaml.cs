@@ -43,33 +43,37 @@ namespace ShoeWeightt.Views
         async void AddItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+            //ItemsListView.ItemsSource = await App.Database.GetItemAsync();
         }
 
         async public void OnDelete(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
             await DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
-            var listItem = (from itm in await App.Database.GetItemAsync()
+            var listItem = (from itm in viewModel.Items
                             where itm.Text == mi.CommandParameter.ToString()
-                            select itm.Id).FirstOrDefault();
-            Console.WriteLine(listItem.ToString());
-            //viewModel.Items.Remove(listItem);
-            //await viewModel.DataStore.DeleteItemAsync(listItem);
-            await App.Database.DeleteItemAsync(await App.Database.GetItemAsync(listItem));
-            ItemsListView.ItemsSource = await App.Database.GetItemAsync();
+                            select itm).FirstOrDefault<Item>();
+            Console.WriteLine(listItem.Text);
+            viewModel.Items.Remove(listItem);
+            await viewModel.DataStore.DeleteItemAsync(listItem.Id);   
+
+
+            //await App.Database.DeleteItemAsync(await App.Database.GetItemAsync(listItem));
+            //ItemsListView.ItemsSource = await App.Database.GetItemAsync();
 
         }
 
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
+        //protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            ItemsListView.ItemsSource = await App.Database.GetItemAsync();
-            //viewModel.DataStore =
+            //ItemsListView.ItemsSource = await App.Database.GetItemAsync();
+            //viewModel.DataStore = 
             //viewModel.LoadItemsCommand.Execute(ItemsListView);
-            //if (viewModel.Items.Count == 0)
-            //    viewModel.LoadItemsCommand.Execute(true);
+            if (viewModel.Items.Count == 0)
+                viewModel.LoadItemsCommand.Execute(true);
         }
     }
 }

@@ -21,13 +21,14 @@ namespace ShoeWeightt.ViewModels
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            //MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            //{
-            //    //var newItem = item as Item;
-            //    //Items.Add(newItem);
-            //    //await DataStore.AddItemAsync(newItem);
-            //    //await App.Database.SaveItemAsync(newItem);
-            //});
+            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
+            {
+                var newItem = item as Item;
+                Items.Add(newItem);
+                Console.WriteLine(newItem.Text);
+                await DataStore.SaveItemAsync(newItem);
+                //await App.Database.SaveItemAsync(newItem);
+            });
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -40,7 +41,7 @@ namespace ShoeWeightt.ViewModels
             try
             {
                 Items.Clear();
-                var items = await App.Database.GetItemAsync();
+                var items = await DataStore.GetItemsAsync();
                 foreach (var item in items)
                 {
                     Items.Add(item);
