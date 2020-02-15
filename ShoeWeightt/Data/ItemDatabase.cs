@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 
 using SQLite;
-
+using ShoeWeightt.Services;
 using ShoeWeightt.Models;
 
 namespace ShoeWeightt.Data
 
 
 {
-    public class ItemDatabase
+    public class ItemDatabase : IDataStore<Item>
     {
         readonly SQLiteAsyncConnection _database;
 
@@ -46,5 +46,6 @@ namespace ShoeWeightt.Data
         {
             return _database.DeleteAsync(item);
         }
+
     }
 }

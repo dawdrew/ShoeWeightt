@@ -68,8 +68,8 @@ namespace ShoeWeightt.Views
             ItemsListView.ItemsSource = await App.Database.GetItemAsync();
             //viewModel.DataStore =
             //viewModel.LoadItemsCommand.Execute(ItemsListView);
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(true);
+            //if (viewModel.Items.Count == 0)
+            //    viewModel.LoadItemsCommand.Execute(true);
         }
     }
 }
