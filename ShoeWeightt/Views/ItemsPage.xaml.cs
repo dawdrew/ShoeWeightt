@@ -61,7 +61,7 @@ namespace ShoeWeightt.Views
                 Console.WriteLine(itm.Text);
             }
             await App.Database.DeleteItemAsync(listItem);
-            
+            viewModel.LoadItemsCommand.Execute(true);
 
             //await App.Database.DeleteItemAsync(await App.Database.GetItemAsync(listItem));
             //ItemsListView.ItemsSource = await App.Database.GetItemAsync();
