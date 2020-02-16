@@ -22,7 +22,7 @@ namespace ShoeWeightt.Views
             Item = new Item
             {
                 //Id = 10,
-                Text = "Item name NIGGA",
+                Text = "Item name here",
                 Description = "This is an item description."
                 
             };
