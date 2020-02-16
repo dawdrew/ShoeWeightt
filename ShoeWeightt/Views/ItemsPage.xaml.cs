@@ -50,13 +50,18 @@ namespace ShoeWeightt.Views
         {
             var mi = ((MenuItem)sender);
             await DisplayAlert("Delete Browse Item", mi.CommandParameter + " will be removed from list", "OK");
-            var listItem = (from itm in viewModel.Items
+            var listItem = (from itm in await App.Database.GetItemsAsync()
                             where itm.Text == mi.CommandParameter.ToString()
                             select itm).FirstOrDefault<Item>();
-            Console.WriteLine(listItem.Text);
+            Console.WriteLine(listItem.Id);
             viewModel.Items.Remove(listItem);
-            await viewModel.DataStore.DeleteItemAsync(listItem.Id);   
-
+            foreach (var itm in viewModel.Items)
+            {
+                Console.WriteLine(itm.Id);
+                Console.WriteLine(itm.Text);
+            }
+            await App.Database.DeleteItemAsync(listItem);
+            
 
             //await App.Database.DeleteItemAsync(await App.Database.GetItemAsync(listItem));
             //ItemsListView.ItemsSource = await App.Database.GetItemAsync();

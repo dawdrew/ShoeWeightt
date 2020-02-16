@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using ShoeWeightt.Models;
 using ShoeWeightt.Views;
+using ShoeWeightt.Data;
 
 namespace ShoeWeightt.ViewModels
 {
@@ -25,8 +26,9 @@ namespace ShoeWeightt.ViewModels
             {
                 var newItem = item as Item;
                 Items.Add(newItem);
-                Console.WriteLine(newItem.Text);
-                await DataStore.SaveItemAsync(newItem);
+                Console.WriteLine(newItem.Id.ToString());
+                Console.WriteLine(newItem);
+                await App.Database.SaveItemAsync(item);
                 //await App.Database.SaveItemAsync(newItem);
             });
         }
@@ -41,10 +43,12 @@ namespace ShoeWeightt.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync();
+                var items = await App.Database.GetItemsAsync();
                 foreach (var item in items)
                 {
                     Items.Add(item);
+                    Console.WriteLine(item.Id);
+                    Console.WriteLine(item.Text);
                 }
             }
             catch (Exception ex)

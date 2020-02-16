@@ -8,7 +8,7 @@ namespace ShoeWeightt.Services
     {
         Task<int> SaveItemAsync(T item);
         //Task<bool> UpdateItemAsync(T item);
-        Task<int> DeleteItemAsync(int id);
+        Task<int> DeleteItemAsync(T item);
         //Task<int> DeleteItemAsync(T item);
         Task<T> GetItemAsync(int id);
         Task<List<T>> GetItemsAsync();

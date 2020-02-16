@@ -11,12 +11,12 @@ namespace ShoeWeightt.Data
 {
     public class ItemDatabase : IDataStore<Item>
     { 
-        public List<Item> items;
+        readonly List<Item> items;
         public ItemDatabase()
-            {
+        {
             items = new List<Item>()
                 {
-                new Item {Text = "SUCK MY COCK", Description="THIS APP SUCKS ASIAN DICK." },
+                new Item {Text = "SUCK MY COCK", Description="THIS APP SUCKS ASIAN DICK."},
                 //new Item { Id = Guid.NewGuid(int), Text = "Second item", Description="This is an item description." },
                 //new Item { Id = Guid.NewGuid(int), Text = "Third item", Description="This is an item description." },
                 //new Item { Id = Guid.NewGuid(int), Text = "Fourth item", Description="This is an item description." },
@@ -26,9 +26,8 @@ namespace ShoeWeightt.Data
             Console.WriteLine(items[0]);
             Console.WriteLine(items[0].Id);
             Console.WriteLine(items[0].Text);
-            SaveItemAsync(items[0]);
-            }
-    
+        }
+
         readonly SQLiteAsyncConnection _database;
 
         public ItemDatabase(string dbPath)
@@ -58,24 +57,20 @@ namespace ShoeWeightt.Data
 
         public Task<int> SaveItemAsync(Item item)
         {
-            //if (item.Id != 0)
-            //{
-            //    return _database.UpdateAsync(item);
-            //}
-            //else
-            //{
-                return _database.InsertOrReplaceAsync(item);
-            //}
+            if (item.Id != 0)
+            {
+                return _database.UpdateAsync(item);
+            }
+            else
+            {
+                return _database.InsertAsync(item);
         }
+    }
 
-        public async Task<int> DeleteItemAsync(int id)
+        public async Task<int> DeleteItemAsync(Item item)
         {
-            //return _database.DeleteAsync(item);
-            
-
-            var oldItem = items.Where((Item arg) => arg.Id == id).FirstOrDefault();
-            items.Remove(oldItem);
-            return await _database.DeleteAsync(oldItem);
+            //items.Remove(item);
+            return await _database.DeleteAsync(item);
             //return await Task.FromResult(true);
         }
 
