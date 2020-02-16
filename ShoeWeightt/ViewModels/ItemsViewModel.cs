@@ -29,7 +29,7 @@ namespace ShoeWeightt.ViewModels
                 Console.WriteLine(item.Id.ToString());
                 Console.WriteLine(item);
                 await App.Database.SaveItemAsync(item);
-                //await App.Database.SaveItemAsync(newItem);
+                
             });
         }
 
